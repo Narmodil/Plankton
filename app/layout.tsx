@@ -1,8 +1,6 @@
-'use client';
-
 import React from 'react';
 import { Inter } from 'next/font/google';
-import { Web3Provider } from '../components/providers/Web3Provider';
+import { ClientLayout } from './ClientLayout';
 import '../styles/globals.css';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -13,10 +11,6 @@ export const metadata = {
   keywords: ['AI', 'agents', 'blockchain', 'web3', 'decentralized', 'marketplace'],
   authors: [{ name: 'Дмитрий', url: 'https://github.com/borealdrive' }],
   creator: 'Дмитрий',
-  themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#0ea5e9' },
-    { media: '(prefers-color-scheme: dark)', color: '#0284c7' },
-  ],
   openGraph: {
     type: 'website',
     locale: 'en_US',
@@ -37,11 +31,6 @@ export const metadata = {
     description: 'Small agents, massive intelligence',
     creator: '@borealdrive',
     images: ['/images/og-image.png'],
-  },
-  viewport: {
-    width: 'device-width',
-    initialScale: 1,
-    maximumScale: 1,
   },
   robots: {
     index: true,
@@ -64,11 +53,9 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
-        <Web3Provider>
-          <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800">
-            {children}
-          </div>
-        </Web3Provider>
+        <ClientLayout>
+          {children}
+        </ClientLayout>
       </body>
     </html>
   );
