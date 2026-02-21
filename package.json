@@ -1,0 +1,55 @@
+{
+  "name": "plankton-prototype",
+  "version": "0.1.0",
+  "description": "Plankton - Decentralized Agent Ecosystem Prototype",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "test": "jest",
+    "test:watch": "jest --watch"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "next": "^14.0.0",
+    "ethers": "^6.8.0",
+    "web3": "^4.0.0",
+    "@web3-react/core": "^8.2.0",
+    "@web3-react/injected-connector": "^8.2.0",
+    "tailwindcss": "^3.3.0",
+    "autoprefixer": "^10.4.0",
+    "postcss": "^8.4.0",
+    "lucide-react": "^0.294.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0",
+    "jest": "^29.0.0",
+    "@testing-library/react": "^14.0.0",
+    "eslint": "^8.0.0",
+    "eslint-config-next": "^14.0.0"
+  },
+  "keywords": [
+    "ai-agents",
+    "decentralized",
+    "blockchain",
+    "web3",
+    "marketplace",
+    "plankton"
+  ],
+  "author": "Дмитрий <@borealdrive>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/borealdrive/plankton.git"
+  },
+  "bugs": {
+    "url": "https://github.com/borealdrive/plankton/issues"
+  },
+  "homepage": "https://github.com/borealdrive/plankton#readme"
+}
