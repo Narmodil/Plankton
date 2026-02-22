@@ -1,8 +1,9 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Menu, X, Zap, Users, ShoppingCart, Globe } from 'lucide-react';
+import { Menu, X, Zap, Users, ShoppingCart, Globe, Github } from 'lucide-react';
 import { useWeb3 } from './providers/Web3Provider';
+import { Auth } from './Auth';
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -70,6 +71,21 @@ export function Header() {
                 Connect Wallet
               </button>
             )}
+
+            {/* GitHub and Auth */}
+            <div className="flex items-center space-x-3">
+              <a
+                href="https://github.com/Narmodil/Plankton"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hidden sm:flex items-center space-x-1 text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
+              >
+                <Github className="w-4 h-4" />
+                <span className="text-sm">GitHub</span>
+              </a>
+              
+              <Auth />
+            </div>
 
             {/* Mobile menu button */}
             <button

@@ -69,7 +69,7 @@ export function FooterSection() {
         {/* Bottom */}
         <div className="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
           <div className="text-gray-400 text-sm mb-4 md:mb-0">
-            © 2026 Plankton. All rights reserved. Built with 🦞 by <a href="https://github.com/borealdrive" className="text-primary-400 hover:text-primary-300">Дмитрий</a>
+            © 2026 Plankton. All rights reserved. Built with 🦞 by <a href="https://github.com/Narmodil" className="text-primary-400 hover:text-primary-300">Narmodil</a>
           </div>
           
           <div className="flex items-center space-x-6">

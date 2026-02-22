@@ -1,7 +1,8 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Search, Filter, Star, Clock, Coins, TrendingUp, Award, Zap } from 'lucide-react';
+import { Search, Filter, Star, Clock, Coins, TrendingUp, Award, Zap, ShoppingCart } from 'lucide-react';
+import { Cart } from '../components/Cart';
 
 const marketplaceStats = [
   { label: 'Total Agents', value: '2,847', icon: Zap, color: 'text-blue-500' },
@@ -107,10 +108,20 @@ const categories = [
   'Marketing',
 ];
 
+const sortOptions = [
+  { value: 'rating', label: 'Highest Rated' },
+  { value: 'price-low', label: 'Price: Low to High' },
+  { value: 'price-high', label: 'Price: High to Low' },
+  { value: 'newest', label: 'Newest First' },
+  { value: 'popular', label: 'Most Popular' },
+];
+
 export function MarketplaceSection() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All Categories');
   const [sortBy, setSortBy] = useState('rating');
+  const [priceRange, setPriceRange] = useState([0, 50]);
+  const [showFilters, setShowFilters] = useState(false);
 
   const filteredAgents = agentListings.filter(agent => {
     const matchesSearch = agent.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -120,7 +131,8 @@ export function MarketplaceSection() {
   });
 
   return (
-    <section id="marketplace" className="section-padding bg-white dark:bg-slate-900">
+    <>
+      <section id="marketplace" className="section-padding bg-white dark:bg-slate-900">
       <div className="container-custom">
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
@@ -168,19 +180,14 @@ export function MarketplaceSection() {
               />
             </div>
 
-            {/* Category Filter */}
-            <div className="flex items-center space-x-2">
+            {/* Advanced Filters Toggle */}
+            <button
+              onClick={() => setShowFilters(!showFilters)}
+              className="flex items-center space-x-2 bg-white dark:bg-slate-700 border border-gray-200 dark:border-gray-600 rounded-lg px-4 py-3 hover:bg-gray-50 dark:hover:bg-slate-600 transition-colors"
+            >
               <Filter className="w-5 h-5 text-gray-400" />
-              <select
-                value={selectedCategory}
-                onChange={(e) => setSelectedCategory(e.target.value)}
-                className="bg-white dark:bg-slate-700 border border-gray-200 dark:border-gray-600 rounded-lg px-4 py-3 focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-              >
-                {categories.map((category) => (
-                  <option key={category} value={category}>{category}</option>
-                ))}
-              </select>
-            </div>
+              <span>Filters</span>
+            </button>
 
             {/* Sort */}
             <select
@@ -188,12 +195,47 @@ export function MarketplaceSection() {
               onChange={(e) => setSortBy(e.target.value)}
               className="bg-white dark:bg-slate-700 border border-gray-200 dark:border-gray-600 rounded-lg px-4 py-3 focus:ring-2 focus:ring-primary-500 focus:border-transparent"
             >
-              <option value="rating">Highest Rated</option>
-              <option value="price-low">Price: Low to High</option>
-              <option value="price-high">Price: High to Low</option>
-              <option value="newest">Newest</option>
+              {sortOptions.map((option) => (
+                <option key={option.value} value={option.value}>{option.label}</option>
+              ))}
             </select>
           </div>
+
+          {/* Advanced Filters */}
+          {showFilters && (
+            <div className="mt-6 pt-6 border-t border-gray-200 dark:border-gray-600">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* Category Filter */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Category</label>
+                  <select
+                    value={selectedCategory}
+                    onChange={(e) => setSelectedCategory(e.target.value)}
+                    className="w-full bg-white dark:bg-slate-700 border border-gray-200 dark:border-gray-600 rounded-lg px-4 py-2 focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                  >
+                    {categories.map((category) => (
+                      <option key={category} value={category}>{category}</option>
+                    ))}
+                  </select>
+                </div>
+
+                {/* Price Range */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    Price Range: {priceRange[0]} - {priceRange[1]} AgentCoin/hr
+                  </label>
+                  <input
+                    type="range"
+                    min="0"
+                    max="50"
+                    value={priceRange[1]}
+                    onChange={(e) => setPriceRange([priceRange[0], parseInt(e.target.value)])}
+                    className="w-full"
+                  />
+                </div>
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Agent Grid */}
@@ -278,10 +320,19 @@ export function MarketplaceSection() {
                   </div>
                 </div>
 
-                {/* CTA Button */}
-                <button className="w-full btn-primary">
-                  Hire Agent
-                </button>
+                {/* CTA Buttons */}
+                <div className="flex space-x-2">
+                  <button 
+                    onClick={() => (window as any).addToCart(agent)}
+                    className="flex-1 bg-primary-500 hover:bg-primary-600 text-white py-2 px-4 rounded-lg font-medium transition-colors flex items-center justify-center space-x-2"
+                  >
+                    <ShoppingCart className="w-4 h-4" />
+                    <span>Add to Cart</span>
+                  </button>
+                  <button className="flex-1 btn-primary">
+                    Hire Now
+                  </button>
+                </div>
               </div>
             </div>
           ))}
@@ -295,5 +346,9 @@ export function MarketplaceSection() {
         </div>
       </div>
     </section>
+
+    {/* Add Cart component */}
+    <Cart />
+    </>
   );
 }
