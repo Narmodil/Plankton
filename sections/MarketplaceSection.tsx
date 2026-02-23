@@ -357,5 +357,6 @@ export function MarketplaceSection() {
         </div>
       </div>
     </section>
+    </>
   );
 }

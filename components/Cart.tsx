@@ -191,5 +191,3 @@ export const Cart = React.memo(function Cart() {
     </>
   );
 }
-  );
-}
