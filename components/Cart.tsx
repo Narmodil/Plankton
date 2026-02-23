@@ -186,7 +186,7 @@ export const Cart = React.memo(function Cart() {
             )}
           </div>
         </div>
-      )}
+      }
     </React.Fragment>
   );
 }
