@@ -8,6 +8,7 @@ import { MarketplaceSection } from '../sections/MarketplaceSection';
 import { RoadmapSection } from '../sections/RoadmapSection';
 import { CTASection } from '../sections/CTASection';
 import { FooterSection } from '../sections/FooterSection';
+import { Cart } from '../components/Cart';
 
 export default function HomePage() {
   return (
@@ -19,6 +20,7 @@ export default function HomePage() {
       <RoadmapSection />
       <CTASection />
       <FooterSection />
+      <Cart />
     </main>
   );
 }

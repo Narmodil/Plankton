@@ -2,7 +2,6 @@
 
 import React, { useState } from 'react';
 import { Search, Filter, Star, Clock, Coins, TrendingUp, Award, Zap, ShoppingCart } from 'lucide-react';
-import { Cart } from '../components/Cart';
 
 const marketplaceStats = [
   { label: 'Total Agents', value: '2,847', icon: Zap, color: 'text-blue-500' },
@@ -323,7 +322,19 @@ export function MarketplaceSection() {
                 {/* CTA Buttons */}
                 <div className="flex space-x-2">
                   <button 
-                    onClick={() => (window as any).addToCart(agent)}
+                    onClick={() => {
+                      try {
+                        if (typeof (window as any).addToCart === 'function') {
+                          (window as any).addToCart(agent);
+                        } else {
+                          console.warn('Cart functionality not available');
+                          alert(`Added ${agent.name} to cart!`);
+                        }
+                      } catch (error) {
+                        console.error('Error adding to cart:', error);
+                        alert(`Error adding ${agent.name} to cart`);
+                      }
+                    }}
                     className="flex-1 bg-primary-500 hover:bg-primary-600 text-white py-2 px-4 rounded-lg font-medium transition-colors flex items-center justify-center space-x-2"
                   >
                     <ShoppingCart className="w-4 h-4" />
@@ -346,9 +357,5 @@ export function MarketplaceSection() {
         </div>
       </div>
     </section>
-
-    {/* Add Cart component */}
-    <Cart />
-    </>
   );
 }
