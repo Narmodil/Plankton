@@ -11,14 +11,7 @@ interface CartItem {
   avatar: string;
 }
 
-interface Agent {
-  id: number;
-  name: string;
-  price: string;
-  avatar?: string;
-}
-
-export const Cart = React.memo(function Cart() {
+export function Cart() {
   const [isOpen, setIsOpen] = useState(false);
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
 
@@ -61,36 +54,16 @@ export const Cart = React.memo(function Cart() {
   const totalCost = cartItems.reduce((sum, item) => sum + (item.price * item.hours), 0);
   const totalHours = cartItems.reduce((sum, item) => sum + item.hours, 0);
 
-  // Make addToCart available globally with security wrapper
+  // Make addToCart available globally
   React.useEffect(() => {
-    const secureAddToCart = (agent: any) => {
-      // Validate agent object structure
-      if (!agent || typeof agent !== 'object' || !agent.id || !agent.name || !agent.price) {
-        console.error('Invalid agent object provided to addToCart');
-        return;
-      }
-      
-      // Sanitize input
-      const sanitizedAgent = {
-        id: Number(agent.id),
-        name: String(agent.name).substring(0, 100),
-        price: String(agent.price),
-        avatar: String(agent.avatar || '🤖').substring(0, 10)
-      };
-      
-      addToCart(sanitizedAgent);
-    };
-    
-    (window as any).addToCart = secureAddToCart;
+    (window as any).addToCart = addToCart;
     return () => {
-      if ((window as any).addToCart === secureAddToCart) {
-        delete (window as any).addToCart;
-      }
+      delete (window as any).addToCart;
     };
-  }, [addToCart]);
+  }, []);
 
   return (
-    <React.Fragment>
+    <>
       {/* Cart Button */}
       <button
         onClick={() => setIsOpen(true)}
@@ -186,7 +159,14 @@ export const Cart = React.memo(function Cart() {
             )}
           </div>
         </div>
-      }
-    </React.Fragment>
+      )}
+
+      {/* Export addToCart function */}
+      <script dangerouslySetInnerHTML={{
+        __html: `
+          window.addToCart = ${addToCart.toString()};
+        `
+      }} />
+    </>
   );
 }
